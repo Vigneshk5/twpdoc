@@ -1,0 +1,17 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/clearChat/route": "app/api/clearChat/route.js",
+  "/api/deleteDocument/route": "app/api/deleteDocument/route.js",
+  "/api/conversation/route": "app/api/conversation/route.js",
+  "/api/documentName/route": "app/api/documentName/route.js",
+  "/api/documentNames/route": "app/api/documentNames/route.js",
+  "/api/deleteChat/route": "app/api/deleteChat/route.js",
+  "/api/documentUpload/[id]/route": "app/api/documentUpload/[id]/route.js",
+  "/api/documentUpload/route": "app/api/documentUpload/route.js",
+  "/api/fetchQueries/route": "app/api/fetchQueries/route.js",
+  "/documents/[slug]/page": "app/documents/[slug]/page.js",
+  "/documentsUpload/page": "app/documentsUpload/page.js",
+  "/page": "app/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/api/documentUrl/route": "app/api/documentUrl/route.js"
+}
