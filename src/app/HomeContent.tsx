@@ -86,7 +86,7 @@ function TokenHandler({ setToken }: { setToken: (token: string) => void }) {
       Cookies.set("authToken", tokenFromUrl, {
         expires: 7,
         sameSite: "None",
-        // secure: false,
+        secure: true,
       });
 
       setToken(tokenFromUrl);
