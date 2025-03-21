@@ -181,7 +181,7 @@ export function ChatMessage({
                 className="text-gray-800 prose prose-sm max-w-none"
                 dangerouslySetInnerHTML={{ __html: sanitizedAnswer }}
               />
-              {_id !== "NO" && (
+              {_id !== "NO" && _id !== "GREETING" && (
                 <Link
                   href={`/documents/${_id}`}
                   className="text-blue-600 hover:text-blue-800 text-sm mt-4 inline-block font-medium transition-colors"
