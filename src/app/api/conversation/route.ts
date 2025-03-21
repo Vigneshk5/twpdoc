@@ -3,12 +3,25 @@ import { Mistral } from "@mistralai/mistralai";
 import dbConnect from "@/lib/db";
 import Document from "@/models/Document";
 import Query from "@/models/Query";
-import { docSelectionPrompt, chatResponsePrompt } from "./config";
+import { docSelectionPrompt, chatResponsePrompt, greetingPatterns } from "./config";
 
 export async function POST(request: Request) {
   await dbConnect();
   try {
     const { query, user_id } = await request.json();
+
+    // Check if the query is a greeting
+    if (greetingPatterns.test(query.trim())) {
+      const greetingResponse = "Hello! How can I assist you today?";
+      await Query.insertMany({
+        document_id: "GREETING",
+        query: query,
+        answer: greetingResponse,
+        user_id: user_id,
+        file_url: "NO",
+      });
+      return NextResponse.json({ docId: "GREETING" }, { status: 200 });
+    }
 
     const mistral = new Mistral({
       apiKey: process.env["MISTRAL_API_KEY"],

@@ -85,3 +85,6 @@ Context Processing:
 3. Fall back to document content if no conversation context matches
 4. Combine sources if needed for complete answer`,
 };
+
+export const greetingPatterns =
+  /^(hi|hello|hey|greetings|good morning|good afternoon|good evening|morning|afternoon|evening)$/i;
