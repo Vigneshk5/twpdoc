@@ -16,7 +16,7 @@ export function NavBar() {
             <h1 className="text-xl font-bold text-gray-900 flex items-center">
               <BotMessageSquare className="w-8 h-8 text-blue-600 mr-3" />
               <span className="bg-gradient-to-r from-[#0070FF] via-[#0048bb] to-[#002c72] inline-block text-transparent bg-clip-text">
-                TwpBot
+                HR ChatBot
               </span>
             </h1>
           </Link>

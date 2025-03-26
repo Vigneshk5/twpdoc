@@ -74,7 +74,7 @@ export function Header({ fetchQ, isLoading, id, user_id }: HeaderProps) {
           <h1 className="text-xl font-bold text-gray-900 flex items-center ">
             <BotMessageSquare className="w-8 h-8 text-[#0070FF] hover:text-[#0060FF] mr-3" />
             <span className="bg-gradient-to-r from-[#0070FF] via-[#0048bb] to-[#002c72] inline-block text-transparent bg-clip-text">
-              TwpBot
+              HR ChatBot
             </span>
           </h1>
           {title && (

@@ -106,20 +106,23 @@ export async function POST(request: Request) {
       }
     }
 
-    if (!docId) {
-      const res = await Query.insertMany({
-        document_id: "NO",
-        query: query,
-        answer:
-          "I'm sorry, I'm not finding any documents directly related to that question.",
-        user_id: user_id,
-        file_url: "NO",
+    // if (!docId) {
+    //   const res = await Query.insertMany({
+    //     document_id: "NO",
+    //     query: query,
+    //     answer:
+    //       "I'm sorry, I'm not finding any documents directly related to that question.",
+    //     user_id: user_id,
+    //     file_url: "NO",
+    //   });
+    //   return NextResponse.json({ docId: docId }, { status: 200 });
+    // }
+    let doc;
+    if (docId) {
+      doc = await Document.find({ _id: docId }, { content: 1 }).sort({
+        created_at: -1,
       });
-      return NextResponse.json({ docId: docId }, { status: 200 });
     }
-    const doc = await Document.find({ _id: docId }, { content: 1 }).sort({
-      created_at: -1,
-    });
 
     const chatResponseMessage: Message = {
       role: "user",
@@ -136,18 +139,29 @@ export async function POST(request: Request) {
     const chatResponse = await mistral.chat.complete({
       model: "mistral-medium",
       messages: chatMessages,
-      temperature: 0.3,
+      temperature: 0,
     });
 
     let answer = chatResponse.choices[0].message.content;
 
-    const res = await Query.insertMany({
-      document_id: docId,
-      query: query,
-      answer: answer,
-      user_id: user_id,
-      file_url: doc[0].file_url,
-    });
+    let res;
+    if (doc) {
+      res = await Query.insertMany({
+        document_id: docId,
+        query: query,
+        answer: answer,
+        user_id: user_id,
+        file_url: doc[0].file_url,
+      });
+    } else {
+      res = await Query.insertMany({
+        document_id: "GREETING",
+        query: query,
+        answer: answer,
+        user_id: user_id,
+        file_url: "null",
+      });
+    }
 
     return NextResponse.json({ docId: docId }, { status: 200 });
   } catch (error) {

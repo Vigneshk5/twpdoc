@@ -151,7 +151,7 @@ export function ChatMessage({
               <div className="bg-blue-100 rounded-full p-2 mr-2">
                 <BotMessageSquare className="w-4 h-4 text-blue-600" />
               </div>
-              <p className="font-medium text-gray-900 mr-2">TwpBot</p>
+              <p className="font-medium text-gray-900 mr-2">HR ChatBot</p>
               <div className="flex space-x-1 items-center">
                 <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" />
                 <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce [animation-delay:-.3s]" />
@@ -172,7 +172,7 @@ export function ChatMessage({
                     <MessageSquareWarning className="w-4 h-4 text-red-600" />
                   )}
                 </div>
-                <p className="font-medium text-gray-900">TwpBot</p>
+                <p className="font-medium text-gray-900">HR ChatBot</p>
               </div>
               <motion.div
                 initial={{ opacity: 0 }}

@@ -12,7 +12,7 @@ export function NavBar() {
           >
             <BotMessageSquare className="w-8 h-8 text-blue-600 mr-3" />
             <span className="bg-gradient-to-r from-[#0070FF] via-[#0048bb] to-[#002c72] inline-block text-transparent bg-clip-text">
-              TwpBot
+              HR ChatBot
             </span>
           </Link>
           <div className="flex space-x-4">
