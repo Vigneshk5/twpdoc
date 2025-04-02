@@ -6,7 +6,10 @@ import Document from "@/models/Document";
 export async function GET() {
   try {
     await dbConnect();
-    const documents = await Document.find({}, { name: 1, created_at: 1, _id: 1 }).sort({
+    const documents = await Document.find(
+      {},
+      { name: 1, file_url: 1, created_at: 1, _id: 1 }
+    ).sort({
       created_at: -1,
     });
     console.log(documents);

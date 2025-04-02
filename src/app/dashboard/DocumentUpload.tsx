@@ -1,10 +1,11 @@
 "use client";
-import { Upload, File, Loader2 } from "lucide-react";
+import { Upload, File, Loader2, X } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import pdfToText from "react-pdftotext";
 import Cookies from "js-cookie";
 
 interface Document {
+  file_url: string;
   _id: string;
   id: string;
   name: string;
@@ -31,6 +32,10 @@ export default function DocumentUpload() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [documentToDelete, setDocumentToDelete] = useState<string | null>(null);
   const [isDeletingDocument, setIsDeletingDocument] = useState(false);
+
+  // New state for modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalDocument, setModalDocument] = useState<Document | null>(null);
 
   useEffect(() => {
     fetchDocuments();
@@ -132,6 +137,19 @@ export default function DocumentUpload() {
     setIsDeleteDialogOpen(true);
   };
 
+  // New function to open modal
+  const openDocumentModal = (doc: Document) => {
+    setModalDocument(doc);
+    setIsModalOpen(true);
+    setSelectedDoc(doc);
+  };
+
+  // Function to close modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalDocument(null);
+  };
+
   const confirmDelete = async () => {
     if (!documentToDelete) return;
     setIsDeletingDocument(true);
@@ -224,7 +242,7 @@ export default function DocumentUpload() {
                     or <span className="text-blue-500 hover:text-blue-600">browse</span>
                   </p>
                   <p className="mt-1 text-xs text-gray-500">
-                    Supported formats: TXT, MD, JSON, CSV, PDF(max 10MB)
+                    Supported formats: PDF(max 10MB)
                   </p>
                 </div>
                 <input
@@ -261,7 +279,7 @@ export default function DocumentUpload() {
                   >
                     <div
                       className="flex-1 flex items-center cursor-pointer"
-                      onClick={() => setSelectedDoc(doc)}
+                      onClick={() => openDocumentModal(doc)}
                     >
                       <File
                         className={`w-5 h-5 mr-3 ${
@@ -314,6 +332,8 @@ export default function DocumentUpload() {
             )}
           </div>
         </div>
+
+        {/* Delete confirmation dialog */}
         {isDeleteDialogOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white p-6 rounded-xl shadow-xl">
@@ -360,6 +380,31 @@ export default function DocumentUpload() {
                     "Delete"
                   )}
                 </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Document Modal */}
+        {isModalOpen && modalDocument && (
+          <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg shadow-xl w-11/12 md:w-4/5 lg:w-3/4 xl:w-2/3 h-5/6 flex flex-col">
+              <div className="flex items-center justify-between p-4 border-b">
+                <h3 className="text-lg font-semibold">{modalDocument.name}</h3>
+                <button
+                  onClick={closeModal}
+                  className="p-1 rounded-full hover:bg-gray-100 transition-colors"
+                >
+                  <X className="w-6 h-6 text-gray-500" />
+                </button>
+              </div>
+
+              <div className="flex-grow overflow-auto p-4">
+                <iframe
+                  src={modalDocument.file_url}
+                  className="w-full h-full border-0"
+                  title={modalDocument.name}
+                />
               </div>
             </div>
           </div>
