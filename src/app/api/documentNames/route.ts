@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
+import { headers } from "next/headers";
 import dbConnect from "@/lib/db";
 import Document from "@/models/Document";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET() {
   try {
-    // Ensure fresh database connection
     await dbConnect();
 
     const documents = await Document.find(
@@ -14,9 +17,14 @@ export async function GET() {
       created_at: -1,
     });
 
-    // Add cache control headers to prevent caching
     const response = NextResponse.json(documents);
-    response.headers.set("Cache-Control", "no-store, max-age=0");
+    response.headers.set(
+      "Cache-Control",
+      "no-store, no-cache, must-revalidate, proxy-revalidate"
+    );
+    response.headers.set("Pragma", "no-cache");
+    response.headers.set("Expires", "0");
+
     return response;
   } catch (error) {
     return NextResponse.json({ error: "Failed to fetch documents" }, { status: 500 });
